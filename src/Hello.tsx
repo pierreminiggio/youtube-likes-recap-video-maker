@@ -11,7 +11,7 @@ export const Hello: React.FC = (props) => {
         const sequence = <Sequence
           key={start}
           from={start}
-          to={start + vid.duration}
+          durationInFrames={vid.duration}
         >
           <Video src={vid.video} />
           <Audio src={vid.audio} />
