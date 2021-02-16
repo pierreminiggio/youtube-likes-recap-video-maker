@@ -11,13 +11,13 @@ export const Hello: React.FC = (props) => {
         const sequence = <Sequence
           key={start}
           from={start}
-          to={vid.duration}
+          to={start + vid.duration}
         >
           <Video src={vid.video} />
           <Audio src={vid.audio} />
         </Sequence>
 
-        start += vid.duration
+        start += vid.duration + 1
         
         return sequence
       })}
