@@ -1,33 +1,37 @@
+import {useEffect, useState} from 'react';
 import {Composition, continueRender, delayRender} from 'remotion';
+import sound from './1.mp3';
+import vid from './1.webm';
 import {Hello} from './Hello';
-import vid from './1.webm'
-import sound from './1.mp3'
-import { useEffect, useState } from 'react';
 
 export const RemotionVideo: React.FC = () => {
-
 	const [handle] = useState(() => delayRender());
-	const [vid1duration, setVid1Duration] = useState([]);
+	const [vid1duration, setVid1Duration] = useState(0);
 
-	const framesPerSecond: number = 60
+	const framesPerSecond = 59.94;
 
-	let numberOfFrames: number = 1
 	useEffect(() => {
-			
-		const videoElement = document.createElement('video')
-		videoElement.setAttribute('src', vid)
-		videoElement.style.display = 'none'
-		console.log(document.querySelector('body'))
-		document.querySelector('body')?.appendChild(videoElement)
-		videoElement.addEventListener('loadeddata', () => {
-			console.log(parseInt(videoElement.duration * framesPerSecond))
-			setVid1Duration(parseInt(videoElement.duration * framesPerSecond))
-	 }, false);
-		continueRender(handle);
+		const videoElement = document.createElement('video');
+		videoElement.setAttribute('src', vid);
+		videoElement.style.display = 'none';
+		document.querySelector('body')?.appendChild(videoElement);
+		videoElement.addEventListener(
+			'loadeddata',
+			() => {
+				setVid1Duration(Math.floor(videoElement.duration * framesPerSecond));
+			},
+			false
+		);
 	}, [handle]);
 
-	if (Number.isInteger(vid1duration)) {
-		numberOfFrames = vid1duration
+	useEffect(() => {
+		if (vid1duration > 0) {
+			continueRender(handle);
+		}
+	}, [handle, vid1duration]);
+
+	if (!vid1duration) {
+		return null;
 	}
 
 	return (
@@ -35,13 +39,13 @@ export const RemotionVideo: React.FC = () => {
 			<Composition
 				id="Hello"
 				component={Hello}
-				durationInFrames={numberOfFrames}
+				durationInFrames={vid1duration}
 				fps={framesPerSecond}
 				width={1920}
 				height={1080}
 				defaultProps={{
-					vid: vid,
-				  sound: sound
+					vid,
+					sound,
 				}}
 			/>
 		</>
