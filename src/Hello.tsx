@@ -1,6 +1,6 @@
 import {Audio, Sequence, Video} from 'remotion';
 
-export const Hello: React.FC = (props) => {
+export const Hello: React.FC = props => {
   const vids = props.vids
 
   let start = 0
