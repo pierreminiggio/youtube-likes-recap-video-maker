@@ -9,6 +9,7 @@ export const Hello: React.FC = (props) => {
 		<>
       {vids.map(vid => {
         const sequence = <Sequence
+          key={start}
           from={start}
           to={vid.duration}
         >
