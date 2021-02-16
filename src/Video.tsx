@@ -6,29 +6,29 @@ import { useEffect, useState } from 'react';
 
 export const RemotionVideo: React.FC = () => {
 
-	// const [handle] = useState(() => delayRender());
-	// const [vid1duration, setVid1Duration] = useState([]);
+	const [handle] = useState(() => delayRender());
+	const [vid1duration, setVid1Duration] = useState([]);
 
 	const framesPerSecond: number = 60
 
-	let numberOfFrames: number = 300
-	// useEffect(() => {
+	let numberOfFrames: number = 1
+	useEffect(() => {
 			
-	// 	const videoElement = document.createElement('video')
-	// 	videoElement.setAttribute('src', vid)
-	// 	videoElement.style.display = 'none'
-	// 	console.log(document.querySelector('body'))
-	// 	document.querySelector('body')?.appendChild(videoElement)
-	// 	videoElement.addEventListener('loadeddata', () => {
-	// 		console.log(parseInt(videoElement.duration * framesPerSecond))
-	// 		setVid1Duration(parseInt(videoElement.duration * framesPerSecond))
-	//  }, false);
-	// 	continueRender(handle);
-	// }, [handle]);
+		const videoElement = document.createElement('video')
+		videoElement.setAttribute('src', vid)
+		videoElement.style.display = 'none'
+		console.log(document.querySelector('body'))
+		document.querySelector('body')?.appendChild(videoElement)
+		videoElement.addEventListener('loadeddata', () => {
+			console.log(parseInt(videoElement.duration * framesPerSecond))
+			setVid1Duration(parseInt(videoElement.duration * framesPerSecond))
+	 }, false);
+		continueRender(handle);
+	}, [handle]);
 
-	// if (Number.isInteger(vid1duration)) {
-	// 	numberOfFrames = vid1duration
-	// }
+	if (Number.isInteger(vid1duration)) {
+		numberOfFrames = vid1duration
+	}
 
 	return (
 		<>
