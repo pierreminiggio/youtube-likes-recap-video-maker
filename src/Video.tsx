@@ -5,7 +5,7 @@ import vid from './1.webm';
 import {Hello} from './Hello';
 import VideoToLoad from './VideoToLoad'
 
-const baseStorageUrl = 'https://storage.miniggiodev.fr/youtube-likes-recap'
+const baseStorageUrl: string = 'https://storage.miniggiodev.fr/youtube-likes-recap'
 const vidsToLoad: VideoToLoad[] = []
 
 const intros: number[] = [1, 2, 3, 4, 5, 6, 7]
@@ -60,7 +60,7 @@ export const RemotionVideo: React.FC<{
 	const [handle] = useState(() => delayRender());
 	const [vidDuration, setVidDuration] = useState(0);
 
-	const framesPerSecond = 59.94;
+	const framesPerSecond: number = 59.94;
 
 	useEffect(() => {
 
@@ -85,7 +85,7 @@ export const RemotionVideo: React.FC<{
 		})
 		
 		Promise.all(promises).then(durations => {
-			let totalDuration = 0
+			let totalDuration: number = 0
 			durations.forEach(duration => {
 				totalDuration += duration
 			})
