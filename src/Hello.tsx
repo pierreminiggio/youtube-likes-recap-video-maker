@@ -1,6 +1,9 @@
 import {Audio, Sequence, Video} from 'remotion';
+import VideoToLoad from './VideoToLoad';
 
-export const Hello: React.FC = props => {
+export const Hello: React.FC<{
+  vids: VideoToLoad[]
+}> = props => {
   const vids = props.vids
 
   let start = 0

@@ -1,7 +1,5 @@
 import {useEffect, useState} from 'react';
 import {Composition, continueRender, delayRender} from 'remotion';
-import sound from './1.mp3';
-import vid from './1.webm';
 import {Hello} from './Hello';
 import VideoToLoad from './VideoToLoad'
 
@@ -22,7 +20,7 @@ const introVideoUrl: string = isTwoPartIntro ?
 vidsToLoad.push(VideoToLoad.makeFromURL(introVideoUrl))
 
 const today: Date = new Date()
-const day: number = today.getDate()
+const day: number = today.getDate() - 1 // TODO REMOVE -1, haven't recorded the 18 yet
 const dayVideoUrl: string = baseStorageUrl + '/number/' + day
 vidsToLoad.push(VideoToLoad.makeFromURL(dayVideoUrl))
 
@@ -52,11 +50,9 @@ const videoTakes: {[key: number]: number} = {
 }
 
 export const RemotionVideo: React.FC<{
-  propOne: string;
-  propTwo: number;
-}> = (propOne, propTwo) => {
-	console.log(propOne)
-	console.log(propTwo)
+
+}> = () => {
+
 	const [handle] = useState(() => delayRender());
 	const [vidDuration, setVidDuration] = useState(0);
 
