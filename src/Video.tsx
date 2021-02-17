@@ -1,19 +1,15 @@
 import {useEffect, useState} from 'react';
 import {Composition, continueRender, delayRender} from 'remotion';
-import sound from './1.mp3';
-import vid from './1.webm';
-import sound17 from './17.mp3';
-import vid17 from './17.webm';
 import {Hello} from './Hello';
 
 const vidsToLoad = [
 	{
-		video: vid,
-		audio: sound
+		video: 'https://storage.miniggiodev.fr/test/1.webm',
+		audio: 'https://storage.miniggiodev.fr/test/1.mp3'
 	},
 	{
-		video: vid17,
-		audio: sound17
+		video: 'https://storage.miniggiodev.fr/test/17.webm',
+		audio: 'https://storage.miniggiodev.fr/test/17.mp3'
 	}
 ]
 
