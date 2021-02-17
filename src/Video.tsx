@@ -10,7 +10,7 @@ const intros: number[] = [1, 2, 3, 4, 5, 6, 7]
 const twoPartsIntro: number[] = [5]
 
 const introVideoStorage: string = baseStorageUrl + '/intro/'
-const pickedIntro: number = intros[Math.floor(Math.random() * intros.length)]
+const pickedIntro: number = 5//intros[Math.floor(Math.random() * intros.length)]
 const isTwoPartIntro: boolean = twoPartsIntro.includes(pickedIntro)
 
 const introVideoUrl: string = isTwoPartIntro ?
@@ -20,7 +20,7 @@ const introVideoUrl: string = isTwoPartIntro ?
 vidsToLoad.push(VideoToLoad.makeFromURL(introVideoUrl))
 
 const today: Date = new Date()
-const day: number = today.getDate() - 1 // TODO REMOVE -1, haven't recorded the 18 yet
+const day: number = 17//today.getDate()
 const dayVideoUrl: string = baseStorageUrl + '/number/' + day
 vidsToLoad.push(VideoToLoad.makeFromURL(dayVideoUrl))
 
@@ -41,6 +41,10 @@ const yearVideoUrl: string = yearTakes ?
 	(yearVideoStorage + '/' + year)
 
 vidsToLoad.push(VideoToLoad.makeFromURL(yearVideoUrl))
+
+if (isTwoPartIntro) {
+	vidsToLoad.push(VideoToLoad.makeFromURL(introVideoStorage + '/' + pickedIntro + '-2'))
+}
 
 const videoTakes: {[key: number]: number} = {
 	1: 1,
