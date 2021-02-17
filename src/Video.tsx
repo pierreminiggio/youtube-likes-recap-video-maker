@@ -1,5 +1,7 @@
 import {useEffect, useState} from 'react';
 import {Composition, continueRender, delayRender} from 'remotion';
+import sound from './1.mp3';
+import vid from './1.webm';
 import {Hello} from './Hello';
 import VideoToLoad from './VideoToLoad'
 
