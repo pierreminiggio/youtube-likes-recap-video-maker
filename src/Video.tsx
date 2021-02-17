@@ -1,17 +1,53 @@
 import {useEffect, useState} from 'react';
 import {Composition, continueRender, delayRender} from 'remotion';
 import {Hello} from './Hello';
+import VideoToLoad from './VideoToLoad'
 
-const vidsToLoad = [
-	{
-		video: 'https://storage.miniggiodev.fr/test/1.webm',
-		audio: 'https://storage.miniggiodev.fr/test/1.mp3'
-	},
-	{
-		video: 'https://storage.miniggiodev.fr/test/17.webm',
-		audio: 'https://storage.miniggiodev.fr/test/17.mp3'
-	}
-]
+const baseStorageUrl: string = 'https://storage.miniggiodev.fr/youtube-likes-recap'
+const vidsToLoad: VideoToLoad[] = []
+
+const intros: number[] = [1, 2, 3, 4, 5, 6, 7]
+const twoPartsIntro: number[] = [5]
+
+const introVideoStorage: string = baseStorageUrl + '/intro/'
+const pickedIntro: number = intros[Math.floor(Math.random() * intros.length)]
+const isTwoPartIntro: boolean = twoPartsIntro.includes(pickedIntro)
+
+const introVideoUrl: string = isTwoPartIntro ?
+	(introVideoStorage + '/' + pickedIntro + '-1') :
+	(introVideoStorage + '/' + pickedIntro)
+
+vidsToLoad.push(VideoToLoad.makeFromURL(introVideoUrl))
+
+const today: Date = new Date()
+const day: number = today.getDate()
+const dayVideoUrl: string = baseStorageUrl + '/number/' + day
+vidsToLoad.push(VideoToLoad.makeFromURL(dayVideoUrl))
+
+const month: number = today.getMonth() + 1
+const monthVideoUrl: string = baseStorageUrl + '/month/' + month
+vidsToLoad.push(VideoToLoad.makeFromURL(monthVideoUrl))
+
+const multipleTakesYear: {[key: number]: number} = {
+	2021: 2
+}
+
+const yearVideoStorage: string = baseStorageUrl + '/year/'
+const year: number = today.getFullYear()
+const yearTakes: number|undefined = multipleTakesYear[year]
+
+const yearVideoUrl: string = yearTakes ?
+	(yearVideoStorage + '/' + year + '-' + (Math.floor(Math.random() * yearTakes) + 1)) :
+	(yearVideoStorage + '/' + year)
+
+vidsToLoad.push(VideoToLoad.makeFromURL(yearVideoUrl))
+
+const videoTakes: {[key: number]: number} = {
+	1: 1,
+	2: 1,
+	3: 1,
+	4: 1
+}
 
 export const RemotionVideo: React.FC = () => {
 	const [handle] = useState(() => delayRender());
