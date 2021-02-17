@@ -49,7 +49,12 @@ const videoTakes: {[key: number]: number} = {
 	4: 1
 }
 
-export const RemotionVideo: React.FC = () => {
+export const RemotionVideo: React.FC<{
+  propOne: string;
+  propTwo: number;
+}> = (propOne, propTwo) => {
+	console.log(propOne)
+	console.log(propTwo)
 	const [handle] = useState(() => delayRender());
 	const [vidDuration, setVidDuration] = useState(0);
 
