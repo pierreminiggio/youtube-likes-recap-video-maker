@@ -11,7 +11,6 @@ const twoPartsIntro: number[] = [5]
 
 const today: Date = new Date()
 const randomKey: string = today.getFullYear() + '' + today.getMonth() + '' + today.getDate()
-console.log(randomKey)
 
 const introVideoStorage: string = baseStorageUrl + '/intro/'
 const pickedIntro: number = intros[Math.floor(random(randomKey + 'intro') * intros.length)]
