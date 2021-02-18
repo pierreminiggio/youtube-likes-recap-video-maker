@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {Composition, continueRender, delayRender} from 'remotion';
+import {Composition, continueRender, delayRender, random} from 'remotion';
 import {Hello} from './Hello';
 import VideoToLoad from './VideoToLoad'
 
@@ -9,8 +9,12 @@ const vidsToLoad: VideoToLoad[] = []
 const intros: number[] = [1, 2, 3, 4, 5, 6, 7]
 const twoPartsIntro: number[] = [5]
 
+const today: Date = new Date()
+const randomKey: string = today.getFullYear() + '' + today.getMonth() + '' + today.getDate()
+console.log(randomKey)
+
 const introVideoStorage: string = baseStorageUrl + '/intro/'
-const pickedIntro: number = intros[Math.floor(Math.random() * intros.length)]
+const pickedIntro: number = intros[Math.floor(random(randomKey + 'intro') * intros.length)]
 const isTwoPartIntro: boolean = twoPartsIntro.includes(pickedIntro)
 
 const introVideoUrl: string = isTwoPartIntro ?
@@ -19,7 +23,6 @@ const introVideoUrl: string = isTwoPartIntro ?
 
 vidsToLoad.push(VideoToLoad.makeFromURL(introVideoUrl))
 
-const today: Date = new Date()
 const day: number = today.getDate()
 const dayVideoUrl: string = baseStorageUrl + '/number/' + day
 vidsToLoad.push(VideoToLoad.makeFromURL(dayVideoUrl))
@@ -37,7 +40,7 @@ const year: number = today.getFullYear()
 const yearTakes: number|undefined = multipleTakesYear[year]
 
 const yearVideoUrl: string = yearTakes ?
-	(yearVideoStorage + '/' + year + '-' + (Math.floor(Math.random() * yearTakes) + 1)) :
+	(yearVideoStorage + '/' + year + '-' + (Math.floor(random(randomKey + '' + year) * yearTakes) + 1)) :
 	(yearVideoStorage + '/' + year)
 
 vidsToLoad.push(VideoToLoad.makeFromURL(yearVideoUrl))
