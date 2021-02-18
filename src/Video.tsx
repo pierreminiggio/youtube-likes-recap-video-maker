@@ -10,7 +10,7 @@ const intros: number[] = [1, 2, 3, 4, 5, 6, 7]
 const twoPartsIntro: number[] = [5]
 
 const introVideoStorage: string = baseStorageUrl + '/intro/'
-const pickedIntro: number = 5//intros[Math.floor(Math.random() * intros.length)]
+const pickedIntro: number = intros[Math.floor(Math.random() * intros.length)]
 const isTwoPartIntro: boolean = twoPartsIntro.includes(pickedIntro)
 
 const introVideoUrl: string = isTwoPartIntro ?
@@ -20,7 +20,7 @@ const introVideoUrl: string = isTwoPartIntro ?
 vidsToLoad.push(VideoToLoad.makeFromURL(introVideoUrl))
 
 const today: Date = new Date()
-const day: number = 17//today.getDate()
+const day: number = today.getDate()
 const dayVideoUrl: string = baseStorageUrl + '/number/' + day
 vidsToLoad.push(VideoToLoad.makeFromURL(dayVideoUrl))
 
