@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import {Composition, continueRender, delayRender, random} from 'remotion';
 import {Hello} from './Hello';
+import Like from './Like'
 import VideoToLoad from './VideoToLoad'
 
 const baseStorageUrl: string = 'https://storage.miniggiodev.fr/youtube-likes-recap'
@@ -22,7 +23,7 @@ const introVideoUrl: string = isTwoPartIntro ?
 
 vidsToLoad.push(VideoToLoad.makeFromURL(introVideoUrl))
 
-const day: number = today.getDate()
+const day: number = 17//today.getDate()
 const dayVideoUrl: string = baseStorageUrl + '/number/' + day
 vidsToLoad.push(VideoToLoad.makeFromURL(dayVideoUrl))
 
@@ -48,11 +49,43 @@ if (isTwoPartIntro) {
 	vidsToLoad.push(VideoToLoad.makeFromURL(introVideoStorage + '/' + pickedIntro + '-2'))
 }
 
+const videoTakesStorage: string = baseStorageUrl + '/video/'
 const videoTakes: {[key: number]: number} = {
 	1: 1,
 	2: 1,
 	3: 1,
 	4: 1
+}
+
+const likes: {[key: number]: Like} = require('../likes.json')
+
+let vidNumber: number = 0
+const alreadyMentionnedChannels: string[] = []
+for (const likeKey in likes) {
+	vidNumber++
+	if (videoTakes[vidNumber] !== undefined) {
+		const pickedvideoTakeNumber: number = Math.floor(random(randomKey + 'vid' + vidNumber) * videoTakes[vidNumber]) + 1
+		vidsToLoad.push(VideoToLoad.makeFromURL(videoTakesStorage + (vidNumber.toString()) + '-' + (pickedvideoTakeNumber.toString())))
+	} else {
+		//TODO FIND PLACEHOLDER IF NEEDED
+	}
+
+	const like: Like = likes[likeKey]
+	const channelId: string = like.channel_id
+
+	if (alreadyMentionnedChannels.includes(channelId)) {
+		continue
+	}
+
+
+	if (like.channel_video !== null) {
+		vidsToLoad.push(VideoToLoad.makeFromURL(like.channel_video))
+	} else {
+		//TODO insert image + audio instead
+	}
+	
+	alreadyMentionnedChannels.push(channelId)
+	console.log(like)
 }
 
 export const RemotionVideo: React.FC<{
