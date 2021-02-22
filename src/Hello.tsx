@@ -1,8 +1,9 @@
 import {Audio, Sequence, Video} from 'remotion';
+import ImageAndAudioToLoad from './ImageAndAudioToLoad'
 import VideoToLoad from './VideoToLoad';
 
 export const Hello: React.FC<{
-  vids: VideoToLoad[]
+  vids: (ImageAndAudioToLoad|VideoToLoad)[]
 }> = props => {
   const vids = props.vids
 
@@ -16,8 +17,16 @@ export const Hello: React.FC<{
           from={start}
           durationInFrames={vid.duration}
         >
-          <Video src={vid.video} />
-          <Audio src={vid.audio} />
+          {vid instanceof VideoToLoad ?
+            <>
+              <Video src={vid.video} />
+              <Audio src={vid.audio} />
+            </> :
+            <>
+              <Audio src={vid.audio} />
+            </>
+          }
+
         </Sequence>
 
         start += vid.duration + 1

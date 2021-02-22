@@ -1,11 +1,12 @@
 import {useEffect, useState} from 'react';
 import {Composition, continueRender, delayRender, random} from 'remotion';
 import {Hello} from './Hello';
+import ImageAndAudioToLoad from './ImageAndAudioToLoad'
 import Like from './Like'
 import VideoToLoad from './VideoToLoad'
 
 const baseStorageUrl: string = 'https://storage.miniggiodev.fr/youtube-likes-recap'
-const vidsToLoad: VideoToLoad[] = []
+const contentsToLoad: (ImageAndAudioToLoad|VideoToLoad)[] = []
 
 const intros: number[] = [1, 2, 3, 4, 5, 6, 7]
 const twoPartsIntro: number[] = [5]
@@ -21,15 +22,15 @@ const introVideoUrl: string = isTwoPartIntro ?
 	(introVideoStorage + '/' + pickedIntro + '-1') :
 	(introVideoStorage + '/' + pickedIntro)
 
-vidsToLoad.push(VideoToLoad.makeFromURL(introVideoUrl))
+contentsToLoad.push(VideoToLoad.makeFromURL(introVideoUrl))
 
 const day: number = 17//today.getDate()
 const dayVideoUrl: string = baseStorageUrl + '/number/' + day
-vidsToLoad.push(VideoToLoad.makeFromURL(dayVideoUrl))
+contentsToLoad.push(VideoToLoad.makeFromURL(dayVideoUrl))
 
 const month: number = today.getMonth() + 1
 const monthVideoUrl: string = baseStorageUrl + '/month/' + month
-vidsToLoad.push(VideoToLoad.makeFromURL(monthVideoUrl))
+contentsToLoad.push(VideoToLoad.makeFromURL(monthVideoUrl))
 
 const multipleTakesYear: {[key: number]: number} = {
 	2021: 2
@@ -43,10 +44,10 @@ const yearVideoUrl: string = yearTakes ?
 	(yearVideoStorage + '/' + year + '-' + (Math.floor(random(randomKey + '' + year) * yearTakes) + 1)) :
 	(yearVideoStorage + '/' + year)
 
-vidsToLoad.push(VideoToLoad.makeFromURL(yearVideoUrl))
+contentsToLoad.push(VideoToLoad.makeFromURL(yearVideoUrl))
 
 if (isTwoPartIntro) {
-	vidsToLoad.push(VideoToLoad.makeFromURL(introVideoStorage + '/' + pickedIntro + '-2'))
+	contentsToLoad.push(VideoToLoad.makeFromURL(introVideoStorage + '/' + pickedIntro + '-2'))
 }
 
 const videoTakesStorage: string = baseStorageUrl + '/video/'
@@ -65,7 +66,7 @@ for (const likeKey in likes) {
 	vidNumber++
 	if (videoTakes[vidNumber] !== undefined) {
 		const pickedvideoTakeNumber: number = Math.floor(random(randomKey + 'vid' + vidNumber) * videoTakes[vidNumber]) + 1
-		vidsToLoad.push(VideoToLoad.makeFromURL(videoTakesStorage + (vidNumber.toString()) + '-' + (pickedvideoTakeNumber.toString())))
+		contentsToLoad.push(VideoToLoad.makeFromURL(videoTakesStorage + (vidNumber.toString()) + '-' + (pickedvideoTakeNumber.toString())))
 	} else {
 		//TODO FIND PLACEHOLDER IF NEEDED
 	}
@@ -79,9 +80,9 @@ for (const likeKey in likes) {
 
 
 	if (like.channel_video !== null) {
-		vidsToLoad.push(VideoToLoad.makeFromURL(like.channel_video))
+		contentsToLoad.push(VideoToLoad.makeFromURL(like.channel_video))
 	} else {
-		//TODO insert image + audio instead
+		contentsToLoad.push(new ImageAndAudioToLoad(like.channel_photo, like.channel_audio))
 	}
 	
 	alreadyMentionnedChannels.push(channelId)
@@ -101,10 +102,10 @@ export const RemotionVideo: React.FC<{
 
 		const promises: Promise<number>[] = []
 
-		vidsToLoad.forEach(vidToLoad => {
+		contentsToLoad.forEach(vidToLoad => {
 			promises.push(new Promise(resolve => {
-				const videoElement = document.createElement('video');
-				videoElement.setAttribute('src', vidToLoad.video);
+				const videoElement = document.createElement(vidToLoad instanceof VideoToLoad ? 'video' : 'audio');
+				videoElement.setAttribute('src', vidToLoad instanceof VideoToLoad ? vidToLoad.video : vidToLoad.audio);
 				videoElement.style.display = 'none';
 				document.querySelector('body')?.appendChild(videoElement);
 				videoElement.addEventListener(
@@ -149,7 +150,7 @@ export const RemotionVideo: React.FC<{
 				width={1920}
 				height={1080}
 				defaultProps={{
-					vids: vidsToLoad
+					vids: contentsToLoad
 				}}
 			/>
 		</>
