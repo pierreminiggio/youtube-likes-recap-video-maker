@@ -1,6 +1,9 @@
+import Size from "./Size"
+
 export default class ImageAndAudioToLoad {
 
   public image: string
+  public imageSize: Size|null = null
   public audio: string
   public duration: number = 0
 

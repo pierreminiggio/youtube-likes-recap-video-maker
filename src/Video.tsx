@@ -3,6 +3,7 @@ import {Composition, continueRender, delayRender, random} from 'remotion';
 import {Hello} from './Hello';
 import ImageAndAudioToLoad from './ImageAndAudioToLoad'
 import Like from './Like'
+import Size from './Size'
 import VideoToLoad from './VideoToLoad'
 
 const baseStorageUrl: string = 'https://storage.miniggiodev.fr/youtube-likes-recap'
@@ -100,14 +101,30 @@ export const RemotionVideo: React.FC<{
 
 	useEffect(() => {
 
-		const promises: Promise<number>[] = []
+		const durationPromises: Promise<number>[] = []
+		const imageSizePromises: Promise<{}>[] = []
+		const createImageSizePromise: CallableFunction = function (imageAndAudio: ImageAndAudioToLoad): Promise<{}> {
+			return new Promise(resolve => {
+				const imageElement: HTMLImageElement = document.createElement('img')
+				imageElement.style.display = 'none'
+				document.querySelector('body')?.appendChild(imageElement)
+				imageElement.onload = function() {
+					imageAndAudio.imageSize = new Size(this.width, this.height)
+					resolve({});
+				}
+				imageElement.src = imageAndAudio.image;
+			})
+		}
 
 		contentsToLoad.forEach(vidToLoad => {
-			promises.push(new Promise(resolve => {
-				const videoElement = document.createElement(vidToLoad instanceof VideoToLoad ? 'video' : 'audio');
-				videoElement.setAttribute('src', vidToLoad instanceof VideoToLoad ? vidToLoad.video : vidToLoad.audio);
-				videoElement.style.display = 'none';
-				document.querySelector('body')?.appendChild(videoElement);
+			if (vidToLoad instanceof ImageAndAudioToLoad) {
+				imageSizePromises.push(createImageSizePromise(vidToLoad))
+			}
+			durationPromises.push(new Promise(resolve => {
+				const videoElement: HTMLVideoElement|HTMLAudioElement = document.createElement(vidToLoad instanceof VideoToLoad ? 'video' : 'audio')
+				videoElement.setAttribute('src', vidToLoad instanceof VideoToLoad ? vidToLoad.video : vidToLoad.audio)
+				videoElement.style.display = 'none'
+				document.querySelector('body')?.appendChild(videoElement)
 				videoElement.addEventListener(
 					'loadeddata',
 					() => {
@@ -119,14 +136,22 @@ export const RemotionVideo: React.FC<{
 				);
 			}))
 		})
-		
-		Promise.all(promises).then(durations => {
-			let totalDuration: number = 0
-			durations.forEach(duration => {
-				totalDuration += duration
+
+		const resolveVidDurations: CallableFunction = () => {
+			Promise.all(durationPromises).then(durations => {
+				let totalDuration: number = 0
+				durations.forEach(duration => {
+					totalDuration += duration
+				})
+				setVidDuration(totalDuration)
 			})
-			setVidDuration(totalDuration)
-		})
+		}
+
+		if (imageSizePromises.length === 0) {
+			resolveVidDurations()
+		} else {
+			Promise.all(imageSizePromises).then(() => resolveVidDurations())
+		}
 
 	}, [handle]);
 
@@ -140,6 +165,9 @@ export const RemotionVideo: React.FC<{
 		return null;
 	}
 
+	const compositionWidth: number = 1920
+	const compositionHeight: number = 1080
+
 	return (
 		<>
 			<Composition
@@ -147,10 +175,12 @@ export const RemotionVideo: React.FC<{
 				component={Hello}
 				durationInFrames={vidDuration}
 				fps={framesPerSecond}
-				width={1920}
-				height={1080}
+				width={compositionWidth}
+				height={compositionHeight}
 				defaultProps={{
-					vids: contentsToLoad
+					vids: contentsToLoad,
+					compositionWidth: compositionWidth,
+					compositionHeight: compositionHeight
 				}}
 			/>
 		</>
