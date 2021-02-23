@@ -1,6 +1,7 @@
 import {Audio, Sequence, Video} from 'remotion';
 import ImageAndAudioToLoad from './ImageAndAudioToLoad'
 import VideoToLoad from './VideoToLoad';
+import {Title} from './Title'
 
 export const Hello: React.FC<{
   vids: (ImageAndAudioToLoad|VideoToLoad)[],
@@ -26,6 +27,7 @@ export const Hello: React.FC<{
             <>
               <Video src={vid.video} />
               <Audio src={vid.audio} />
+              {vid.title ? <Title title={vid.title} /> : <></>}
             </> :
             <>
               <img src={vid.image} width={
@@ -36,6 +38,7 @@ export const Hello: React.FC<{
                 marginLeft: ((compositionWidth - (compositionHeight / vid.imageSize?.height) * vid.imageSize?.width) / 2).toString() + 'px'
               }} />
               <Audio src={vid.audio} />
+              {vid.title ? <Title title={vid.title} /> : <></>}
             </>
           }
 

@@ -8,6 +8,7 @@ export default class Like {
   public channel_video: string|null
   public id: number
   public title: string
+  public video_clip: string|null
   public youtube_id: string
 
   public constructor(
@@ -19,6 +20,7 @@ export default class Like {
     channel_video: string|null,
     id: number,
     title: string,
+    video_clip: string|null,
     youtube_id: string
   ) {
     this.channel_audio = channel_audio
@@ -29,6 +31,7 @@ export default class Like {
     this.channel_video = channel_video
     this.id = id
     this.title = title
+    this.video_clip = video_clip
     this.youtube_id = youtube_id
   }
 }
