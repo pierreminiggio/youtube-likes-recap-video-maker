@@ -29,7 +29,7 @@ const day: number = 17//today.getDate()
 const dayVideoUrl: string = baseStorageUrl + '/number/' + day
 contentsToLoad.push(VideoToLoad.makeFromURL(dayVideoUrl))
 
-const month: number = today.getMonth() + 1
+const month: number = 2//today.getMonth() + 1
 const monthVideoUrl: string = baseStorageUrl + '/month/' + month
 contentsToLoad.push(VideoToLoad.makeFromURL(monthVideoUrl))
 
