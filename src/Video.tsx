@@ -105,8 +105,6 @@ for (const likeKey in likes) {
 	} else {
 		contentsToLoad.push(new ImageAndAudioToLoad(baseStorageUrl + '/no-clip.png', audioToSpeechEndPoint + 'zut,%20pas%20de%20clip', like.title))
 	}
-	
-	console.log(like)
 }
 
 export const RemotionVideo: React.FC<{

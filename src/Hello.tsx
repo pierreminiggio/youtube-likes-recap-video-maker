@@ -17,7 +17,6 @@ export const Hello: React.FC<{
 	return (
 		<>
       {vids.map(vid => {
-        console.log(vid)
         const sequence = <Sequence
           key={start}
           from={start}
@@ -26,7 +25,6 @@ export const Hello: React.FC<{
           {vid instanceof VideoToLoad ?
             <>
               <Video src={vid.video} />
-              <Audio src={vid.audio} />
               {vid.title ? <Title title={vid.title} /> : <></>}
             </> :
             <>
