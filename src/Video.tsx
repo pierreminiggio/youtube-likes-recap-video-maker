@@ -6,14 +6,15 @@ import Like from './Like'
 import Size from './Size'
 import VideoToLoad from './VideoToLoad'
 
-const baseStorageUrl: string = 'https://storage.miniggiodev.fr/youtube-likes-recap'
+const baseStorageUrl = 'https://storage.miniggiodev.fr/youtube-likes-recap'
 const contentsToLoad: (ImageAndAudioToLoad|VideoToLoad)[] = []
 
 const intros: number[] = [1, 2, 3, 4, 5, 6, 7]
 const twoPartsIntro: number[] = [5]
 
-const today: Date = new Date()
-const randomKey: string = today.getFullYear() + '' + today.getMonth() + '' + today.getDate()
+const yesterday: Date = new Date()
+yesterday.setDate(yesterday.getDate() - 1)
+const randomKey: string = yesterday.getFullYear() + '' + yesterday.getMonth() + '' + yesterday.getDate()
 
 const introVideoStorage: string = baseStorageUrl + '/intro/'
 const pickedIntro: number = intros[Math.floor(random(randomKey + 'intro') * intros.length)]
@@ -25,11 +26,11 @@ const introVideoUrl: string = isTwoPartIntro ?
 
 contentsToLoad.push(VideoToLoad.makeFromURL(introVideoUrl))
 
-const day: number = today.getDate()
+const day: number = yesterday.getDate()
 const dayVideoUrl: string = baseStorageUrl + '/number/' + day
 contentsToLoad.push(VideoToLoad.makeFromURL(dayVideoUrl))
 
-const month: number = today.getMonth() + 1
+const month: number = yesterday.getMonth() + 1
 const monthVideoUrl: string = baseStorageUrl + '/month/' + month
 contentsToLoad.push(VideoToLoad.makeFromURL(monthVideoUrl))
 
@@ -38,7 +39,7 @@ const multipleTakesYear: {[key: number]: number} = {
 }
 
 const yearVideoStorage: string = baseStorageUrl + '/year/'
-const year: number = today.getFullYear()
+const year: number = yesterday.getFullYear()
 const yearTakes: number|undefined = multipleTakesYear[year]
 
 const yearVideoUrl: string = yearTakes ?
@@ -61,7 +62,7 @@ const videoTakes: {[key: number]: number} = {
 
 const likes: {[key: number]: Like} = require('../likes.json')
 
-const audioToSpeechEndPoint: string = 'https://gtts-api.miniggiodev.fr/'
+const audioToSpeechEndPoint = 'https://gtts-api.miniggiodev.fr/'
 const placeholderVideoTexts: CallableFunction[] = [
 	(n: number) => 'Le contenu numero ' + n + ' d\'aujourd\'hui est de ',
 	(n: number) => 'Contenu numero ' + n,
@@ -70,7 +71,7 @@ const placeholderVideoTexts: CallableFunction[] = [
 	(n: number) => 'La video suivante est de ',
 ]
 
-let vidNumber: number = 0
+let vidNumber = 0
 const alreadyMentionnedChannels: string[] = []
 for (const likeKey in likes) {
 	vidNumber++
@@ -114,7 +115,7 @@ export const RemotionVideo: React.FC<{
 	const [handle] = useState(() => delayRender());
 	const [vidDuration, setVidDuration] = useState(0);
 
-	const framesPerSecond: number = 59.94;
+	const framesPerSecond = 59.94;
 
 	useEffect(() => {
 
@@ -156,7 +157,7 @@ export const RemotionVideo: React.FC<{
 
 		const resolveVidDurations: CallableFunction = () => {
 			Promise.all(durationPromises).then(durations => {
-				let totalDuration: number = 0
+				let totalDuration = 0
 				durations.forEach(duration => {
 					totalDuration += duration
 				})
@@ -182,8 +183,8 @@ export const RemotionVideo: React.FC<{
 		return null;
 	}
 
-	const compositionWidth: number = 1920
-	const compositionHeight: number = 1080
+	const compositionWidth = 1920
+	const compositionHeight = 1080
 
 	return (
 		<>
@@ -196,8 +197,8 @@ export const RemotionVideo: React.FC<{
 				height={compositionHeight}
 				defaultProps={{
 					vids: contentsToLoad,
-					compositionWidth: compositionWidth,
-					compositionHeight: compositionHeight
+					compositionWidth,
+					compositionHeight
 				}}
 			/>
 		</>
