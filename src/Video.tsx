@@ -186,19 +186,22 @@ export const RemotionVideo: React.FC<{
 	const compositionWidth = 1920
 	const compositionHeight = 1080
 
+	const outroDuration = 300
+
 	return (
 		<>
 			<Composition
 				id="Hello"
 				component={Hello}
-				durationInFrames={vidDuration}
+				durationInFrames={vidDuration + outroDuration}
 				fps={framesPerSecond}
 				width={compositionWidth}
 				height={compositionHeight}
 				defaultProps={{
 					vids: contentsToLoad,
 					compositionWidth,
-					compositionHeight
+					compositionHeight,
+					outroDuration
 				}}
 			/>
 		</>
