@@ -22,7 +22,7 @@ jobs:
       - run: echo $WORKFLOW_INPUT > likes.json
         env:
           WORKFLOW_INPUT: ${{ toJson(github.event.inputs) }}
-      - run: npm run build"
+      - run: npm run build
       - uses: actions/upload-artifact@v2
         with:
           name: out.mp4
