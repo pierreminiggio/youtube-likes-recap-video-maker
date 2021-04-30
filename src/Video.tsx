@@ -60,7 +60,8 @@ const videoTakes: {[key: number]: number} = {
 	4: 1
 }
 
-const likes: {[key: number]: Like} = require('../likes.json')
+const jsonLikes: {likes: string} = require('../likes.json')
+const likes: {[key: number]: Like} = JSON.parse(jsonLikes.likes)
 
 const audioToSpeechEndPoint = 'https://gtts-api.miniggiodev.fr/'
 const placeholderVideoTexts: CallableFunction[] = [
