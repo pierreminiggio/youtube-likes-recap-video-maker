@@ -4,7 +4,7 @@ on:
       likes:
         description: "Likes"
         required: true
-        default: "Welcome to Remotion"
+        default: "JSON d'objets Like"
 name: Render video
 jobs:
   render:
