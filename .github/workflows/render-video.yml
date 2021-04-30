@@ -16,7 +16,8 @@ jobs:
       - run: sudo apt update
       - run: sudo apt install ffmpeg
       - run: npm i
-      - run: echo "$WORKFLOW_INPUT" > likes.json
+      - run: echo $WORKFLOW_INPUT
+      - run: echo $WORKFLOW_INPUT > likes.json
       - run: npm run build"
         env:
           WORKFLOW_INPUT: ${{ toJson(github.event.inputs) }}
