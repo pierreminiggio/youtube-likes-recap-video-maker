@@ -120,7 +120,7 @@ export const RemotionVideo: React.FC<{
 	useEffect(() => {
 
 		const durationPromises: Promise<number>[] = []
-		const imageSizePromises: Promise<{}>[] = []
+		const imageSizePromises: Promise<void>[] = []
 		const createImageSizePromise: CallableFunction = function (imageAndAudio: ImageAndAudioToLoad): Promise<{}> {
 			return new Promise(resolve => {
 				const imageElement: HTMLImageElement = document.createElement('img')
