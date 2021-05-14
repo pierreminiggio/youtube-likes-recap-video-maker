@@ -1,10 +1,10 @@
 # Remotion video
 
 -Commands to convert mp4 into webm & mp3
--```console
--ffmpeg -i input.mp4 -c:v libvpx -quality good -cpu-used 0 -b:v 7000k -qmin 10 -qmax 42 -maxrate 500k -bufsize 1500k -threads 8 -vf scale=-1:1080 -c:a libvorbis -b:a 192k -f webm output.webm
--ffmpeg -i input.mp4 output.mp3
--```
+```console
+ffmpeg -i input.mp4 -c:v libvpx -quality good -cpu-used 0 -b:v 7000k -qmin 10 -qmax 42 -maxrate 500k -bufsize 1500k -threads 8 -vf scale=-1:1080 -c:a libvorbis -b:a 192k -f webm output.webm
+ffmpeg -i input.mp4 output.mp3
+```
 
 <p align="center">
   <a href="https://github.com/JonnyBurger/remotion-logo">
