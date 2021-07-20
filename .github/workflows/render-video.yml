@@ -15,6 +15,7 @@ jobs:
       - uses: actions/setup-node@main
       - run: sudo apt update
       - run: sudo apt install ffmpeg
+      - run: npm install -g npm@latest
       - run: npm i
       - run: echo $WORKFLOW_INPUT
         env:
