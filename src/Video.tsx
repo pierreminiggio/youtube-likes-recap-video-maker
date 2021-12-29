@@ -9,7 +9,7 @@ import VideoToLoad from './VideoToLoad'
 const baseStorageUrl = 'https://storage.miniggiodev.fr/youtube-likes-recap'
 const contentsToLoad: (ImageAndAudioToLoad|VideoToLoad)[] = []
 
-const intros: number[] = [1, 2, 3, 4, 5, 6, 7]
+const intros: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 const twoPartsIntro: number[] = [5]
 
 const yesterday: Date = new Date()
