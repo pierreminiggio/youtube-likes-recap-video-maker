@@ -17,10 +17,10 @@ jobs:
       - run: sudo apt install ffmpeg
       - run: sudo npm install -g npm@latest
       - run: npm i
-      - run: LANG=en_US.UTF-8 echo $WORKFLOW_INPUT
+      - run: echo $WORKFLOW_INPUT
         env:
           WORKFLOW_INPUT: ${{ toJson(github.event.inputs) }}
-      - run: echo $WORKFLOW_INPUT > likes.json
+      - run: LANG=en_US.UTF-8 echo $WORKFLOW_INPUT > likes.json
         env:
           WORKFLOW_INPUT: ${{ toJson(github.event.inputs) }}
       - run: npm run build
