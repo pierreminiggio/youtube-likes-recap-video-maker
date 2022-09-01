@@ -17,7 +17,7 @@ jobs:
       - run: sudo apt install ffmpeg
       - run: sudo npm install -g npm@latest
       - run: npm i
-      - run: echo $WORKFLOW_INPUT
+      - run: LANG=en_US.UTF-8 echo $WORKFLOW_INPUT
         env:
           WORKFLOW_INPUT: ${{ toJson(github.event.inputs) }}
       - run: echo $WORKFLOW_INPUT > likes.json
