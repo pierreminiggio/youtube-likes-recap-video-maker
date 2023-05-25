@@ -36,7 +36,8 @@ contentsToLoad.push(VideoToLoad.makeFromURL(monthVideoUrl))
 
 const multipleTakesYear: {[key: number]: number} = {
 	2021: 2,
-	2022: 2
+	2022: 2,
+	2023: 2
 }
 
 const yearVideoStorage: string = baseStorageUrl + '/year/'
