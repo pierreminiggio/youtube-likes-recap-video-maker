@@ -37,7 +37,8 @@ contentsToLoad.push(VideoToLoad.makeFromURL(monthVideoUrl))
 const multipleTakesYear: {[key: number]: number} = {
 	2021: 2,
 	2022: 2,
-	2023: 2
+	2023: 2,
+	2024: 1
 }
 
 const yearVideoStorage: string = baseStorageUrl + '/year/'
@@ -48,9 +49,8 @@ const audioToSpeechEndPoint = 'https://gtts-api.miniggiodev.fr/'
 
 if (yearTakes !== undefined) {
 	const yearVideoUrl: string = yearTakes ?
-		(yearVideoStorage + '/' + year + '-' + (Math.floor(random(randomKey + '' + year) * yearTakes) + 1)) :
-		(yearVideoStorage + '/' + year)
-
+		(yearVideoStorage + year + '-' + (Math.floor(random(randomKey + '' + year) * yearTakes) + 1)) :
+		(yearVideoStorage + year)
 
 	contentsToLoad.push(VideoToLoad.makeFromURL(yearVideoUrl))
 } else {
