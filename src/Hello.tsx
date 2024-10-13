@@ -4,6 +4,10 @@ import VideoToLoad from './VideoToLoad';
 import {Title} from './Title'
 import { Outro } from './Outro';
 
+function instanceOfVideoToLoad(object: any): object is VideoToLoad {
+	return 'video' in object
+}
+
 export const Hello: React.FC<{
   vids: (ImageAndAudioToLoad|VideoToLoad)[],
   compositionWidth: number,
@@ -16,14 +20,14 @@ export const Hello: React.FC<{
 
 	return (
 		<>
-			{vids.map(vid => {
+			{vids.map((vid: ImageAndAudioToLoad|VideoToLoad) => {
         const sequence = (
 	<Sequence
 		key={start}
 		from={start}
 		durationInFrames={vid.duration}
 	>
-		{vid instanceof VideoToLoad ?
+		{instanceOfVideoToLoad(vid) ?
 			<>
 				<Video src={vid.video} />
 				{vid.title ? <Title title={vid.title} /> : <></>}

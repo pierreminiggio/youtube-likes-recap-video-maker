@@ -21,8 +21,8 @@ const pickedIntro: number = intros[Math.floor(random(randomKey + 'intro') * intr
 const isTwoPartIntro: boolean = twoPartsIntro.includes(pickedIntro)
 
 const introVideoUrl: string = isTwoPartIntro ?
-	(introVideoStorage + '/' + pickedIntro + '-1') :
-	(introVideoStorage + '/' + pickedIntro)
+	(introVideoStorage + pickedIntro + '-1') :
+	(introVideoStorage + pickedIntro)
 
 contentsToLoad.push(VideoToLoad.makeFromURL(introVideoUrl))
 
